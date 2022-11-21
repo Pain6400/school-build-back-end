@@ -6,9 +6,9 @@ import { bodyRolValidator, bodyUserRolValidator } from "../middlewares/validator
 
 const router = Router();
 
-router.get("/", requireToken, checkRoleAuth(["super_admin", "student"]), getRoles);
-router.post("/Create", bodyRolValidator, createRole);
-router.get("/usuarioRoles", usuarioRoles)
-router.post("/createUserRole", bodyUserRolValidator, createUserRole);
+router.get("/", requireToken, checkRoleAuth(["super_admin"]), getRoles);
+router.post("/Create", requireToken, checkRoleAuth(["super_admin"]), bodyRolValidator, createRole);
+router.get("/usuarioRoles", requireToken, checkRoleAuth(["super_admin"]), usuarioRoles)
+router.post("/createUserRole", requireToken, checkRoleAuth(["super_admin"]), bodyUserRolValidator, createUserRole);
 
 export default router;

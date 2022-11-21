@@ -38,10 +38,28 @@ export const bodyLinkValidator = [
 ];
 
 export const bodyRegisterValidator = [
+    body("school_id", "Formato incorrecto")
+        .trim()
+        .notEmpty(),
+    body("userName", "Formato incorrecto")
+        .trim()
+        .notEmpty(),
+    body("name", "Formato incorrecto")
+        .trim()
+        .notEmpty(),
+    body("phoneNumber", "Formato incorrecto")
+        .trim()
+        .notEmpty()
+        .isLength( { min: 8, max: 8 }),
+    body("dateBirth", "Formato incorrecto")
+        .trim()
+        .notEmpty(),
     body('email', "Formato incorrecto")
         .trim()
         .isEmail()
         .normalizeEmail(),
+    body("picture", "Formato incorrecto")
+        .trim(),
     body("password", "Minimo 6 caracteres")        
         .trim()
         .isLength( { min: 6 }),

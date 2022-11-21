@@ -1,13 +1,23 @@
 import { User } from "../models/User.js";
+import { nanoid } from "nanoid";
 import { generateToken, generateRefreshToken } from "../utils/tokenManager.js";
 
 export const register = async (req, res) => {
-    const { email, password } = req.body;
+    const { 
+            school_id, userName,name,
+            phoneNumber,dateBirth,email, picture,
+            password 
+        } = req.body;
  
     try {
         let user = await User.findOne({email});
         if(user) throw { code: 1100};
-        user = new User({ email, password });
+        user = new User({ 
+            school_id, account_number: nanoid(6), userName,name,
+            phoneNumber, dateBirth,email, picture,
+            password  
+        });
+        
         await user.save();
 
         const token = generateToken(user.id)
@@ -20,7 +30,7 @@ export const register = async (req, res) => {
             return res.status(400).json({status: false, message: "El correo ya existe"})
         }
 
-        return res.status(500).json({status: false, message: "Error de servidor"})
+        return res.status(500).json({status: false, message: error.message})
     }
 }
 
@@ -50,8 +60,8 @@ export const login = async (req, res) => {
 
 export const infoUser = async(req, res) => {
     try {
-        const  { _id , email } = await User.findById(req.uid).lean();
-        return res.json({ email, _id })
+        const  { _id , school_id, userName, name, phoneNumber, dateBirth, email  } = await User.findById(req.uid).lean();
+        return res.json({ status: false, message: "El usuario no existe", userInfo: { _id , school_id, userName, name, phoneNumber, dateBirth, email }})
     } catch (error) {
         return res.status(500).json({status: false, message: "Error de servidor"})
     }

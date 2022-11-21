@@ -1,6 +1,41 @@
 import mongoose from "mongoose";
 import bcryptjs from "bcryptjs";
 const userShema = new mongoose.Schema({
+    school_id: {
+        type: String,
+        require: true,
+        trim: true,
+        lowercase: true,
+        index: { unique: true }
+    },
+    account_number: {
+        type: String,
+        require: true,
+        trim: true,
+    },
+    userName: {
+        type: String,
+        require: true,
+        trim: true,
+        unique: true,
+        lowercase: true,
+        index: { unique: true }
+    },
+    name: {
+        type: String,
+        require: true,
+        trim: true,
+    },
+    phoneNumber: {
+        type: Number,
+        require: true,
+        trim: true,
+    },
+    dateBirth: {
+        type: Date,
+        require: true,
+        trim: true,
+    },
     email: {
         type: String,
         require: true,
@@ -8,6 +43,11 @@ const userShema = new mongoose.Schema({
         unique: true,
         lowercase: true,
         index: { unique: true }
+    },
+    picture: {
+        type: String,
+        require: false,
+        trim: true
     },
     password: {
         type: String,
