@@ -39,7 +39,7 @@ export const createLink = async (req, res) => {
         const link = new Link({ longLink, nanoLink: nanoid(6), uid: req.uid })
         await link.save();
 
-        return res.status(201).json({ link })
+        return res.status(201).json({ status: true, message: "Link creado correctamente", link })
     } catch (error) {
         return res.status(500).json({status: false, message: "Error de servidor"})
     }

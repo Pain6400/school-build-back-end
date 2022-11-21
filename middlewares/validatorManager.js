@@ -64,3 +64,23 @@ export const bodyLoginValidator = [
     .normalizeEmail(),
     validationResultExpress
 ];
+
+export const bodyRolValidator = [
+    body("name", "Formato Incorrecto")
+    .trim()
+    .notEmpty(),
+    body("description", "Formato Incorrecto")
+    .trim()
+    .notEmpty(),
+    validationResultExpress
+];
+
+export const bodyUserRolValidator = [
+    body("user_id", "Formato Incorrecto")
+    .trim()
+    .notEmpty(),
+    body("role_id", "Formato Incorrecto")
+    .trim()
+    .notEmpty(),
+    validationResultExpress
+];

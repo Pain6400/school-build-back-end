@@ -9,7 +9,7 @@ router.post('/login', bodyLoginValidator, login);
 
 router.post('/register', bodyRegisterValidator, register)
 
-router.get("/protected", requireToken, infoUser);
+router.get("/userInfoById", requireToken, infoUser);
 
 router.get("/refreshToken", requireRefreshToken, refreshToken);
 
