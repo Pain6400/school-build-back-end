@@ -58,6 +58,15 @@ export const login = async (req, res) => {
 }
 
 
+export const Users = async(req, res) => {
+    try {
+        const  { _id , school_id, userName, name, phoneNumber, dateBirth, email  } = await User.find().exec();
+        return res.json({ status: false, message: "El usuario no existe", userInfo: { _id , school_id, userName, name, phoneNumber, dateBirth, email }})
+    } catch (error) {
+        return res.status(500).json({status: false, message: "Error de servidor"})
+    }
+}
+
 export const infoUser = async(req, res) => {
     try {
         const  { _id , school_id, userName, name, phoneNumber, dateBirth, email  } = await User.findById(req.uid).lean();
