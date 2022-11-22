@@ -11,6 +11,17 @@ export const getRoles = async(req, res) => {
     }
 }
 
+export const getRole = async(req, res) => {
+    try {
+        const { rolId } = req.params;
+        const role = await Role.findById(rolId);
+
+        return res.status(200).json({ status: true, message: "Peticion Exitosa", role}); 
+    } catch (error) {
+        return res.status(500).json({ status: false, message: error.message})
+    }
+}
+
 export const createRole = async(req, res) => {
     try {
         const { name, description, uid} = req.body;

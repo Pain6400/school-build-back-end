@@ -5,9 +5,9 @@ import express from 'express';
 import cors from "cors";
 
 import authRouter from './routes/auth.route.js';
-import linkRouter from './routes/link.route.js';
+import userRouter from './routes/user.router.js';
 import roleRouter from './routes/role.router.js';
-
+import linkRouter from './routes/link.route.js';
 const app = express();
 
 const whiteList = [
@@ -28,8 +28,9 @@ app.use(cors({
 app.use(express.json());
 app.use(cookieParser());
 app.use('/api/v1/auth', authRouter);
-app.use('/api/v1/links', linkRouter);
+app.use('/api/v1/users', userRouter);
 app.use('/api/v1/roles', roleRouter);
+app.use('/api/v1/links', linkRouter);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log("http://localhost:" + PORT))
