@@ -75,6 +75,26 @@ export const bodyRegisterValidator = [
         validationResultExpress,
 ];
 
+export const bodyUpdateValidator = [
+    body("name", "Formato incorrecto")
+        .trim()
+        .notEmpty(),
+    body("phoneNumber", "Formato incorrecto")
+        .trim()
+        .notEmpty()
+        .isLength( { min: 8, max: 8 }),
+    body("dateBirth", "Formato incorrecto")
+        .trim()
+        .notEmpty(),
+    body('email', "Formato incorrecto")
+        .trim()
+        .isEmail()
+        .normalizeEmail(),
+    body("picture", "Formato incorrecto")
+        .trim(),
+    validationResultExpress,
+];
+
 export const bodyLoginValidator = [
     body('email', "Formato incorrecto")
     .trim()

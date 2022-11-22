@@ -53,6 +53,10 @@ const userShema = new mongoose.Schema({
         type: String,
         require: true
     },
+    status: {
+        type: Boolean,
+        require: true
+    }
 });
 
 userShema.pre("save", async function(next) {
