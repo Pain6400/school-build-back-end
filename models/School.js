@@ -2,6 +2,11 @@ import mongoose from "mongoose";
 const { Schema, model } = mongoose;
 
 const SchoolShema = new Schema({
+    planId: {
+        type: Schema.Types.ObjectId,
+        required: true,
+        ref: "Plan"
+    },
     name: {
         type: String,
         require: true,

@@ -1,25 +1,26 @@
 import mongoose from "mongoose";
 const { Schema, model } = mongoose;
 
-const RoleSchema = new Schema({
+const CourseShema = new Schema({
     code: {
         type: String,
         require: true,
+        unique: true,
         trim: true,
-        unique: true
+        max: 10
     },
     name: {
         type: String,
-        require: true,
+        require: false,
         trim: true,
-        unique: true
+        max: 50
     },
     description: {
         type: String,
-        require: true,
-        trim: true
+        require: false,
+        trim: true,
+        max: 250
     }
-});
+})
 
-
-export const Role = model("Role", RoleSchema);
+export const Course = model("Course", CourseShema);

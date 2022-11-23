@@ -2,11 +2,9 @@ import mongoose from "mongoose";
 import bcryptjs from "bcryptjs";
 const userShema = new mongoose.Schema({
     school_id: {
-        type: String,
-        require: true,
-        trim: true,
-        lowercase: true,
-        index: { unique: true }
+        type: Schema.Types.ObjectId,
+        required: true,
+        ref: "School"
     },
     account_number: {
         type: String,
