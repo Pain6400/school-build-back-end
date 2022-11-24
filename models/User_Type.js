@@ -2,6 +2,13 @@ import mongoose from "mongoose";
 const { Schema, model } = mongoose;
 
 const UserTypeSchema = new Schema({
+    code: {
+        type: String,
+        require: true,
+        trim: true,
+        max: 3,
+        unique: true
+    },
     title: {
         type: String,
         require: true,

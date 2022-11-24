@@ -24,9 +24,9 @@ export const getRole = async(req, res) => {
 
 export const createRole = async(req, res) => {
     try {
-        const { name, description, uid} = req.body;
+        const { code, name, description, uid} = req.body;
 
-        const role = new Role({ name, description, uid });
+        const role = new Role({ code, name, description, uid });
 
         await role.save();
         return res.status(201).json({ status: true, message: "Rol creado correctamente", role })

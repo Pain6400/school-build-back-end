@@ -7,7 +7,7 @@ import { ROLES_SETTING } from '../config/roles_setting.js';
 
 const router = Router();
 
-router.post('/register', requireToken, checkRoleAuth([ROLES_SETTING.SUPERADMIN, ROLES_SETTING.ADMIN]), bodyRegisterValidator, register);
+router.post('/register', requireToken,checkRoleAuth([ROLES_SETTING.SUPERADMIN, ROLES_SETTING.ADMIN]), bodyRegisterValidator, register);
 router.get("/userInfoById/:roleId", requireToken,checkRoleAuth([ROLES_SETTING.SUPERADMIN, ROLES_SETTING.ADMIN]), infoUser);
 router.get("/getUsersByRole/:rolId", requireToken, requireToken,checkRoleAuth([ROLES_SETTING.SUPERADMIN, ROLES_SETTING.ADMIN]), getUsersByRole);
 router.patch('/update/:userId', requireToken, bodyUpdateValidator, update);

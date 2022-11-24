@@ -1,10 +1,11 @@
 import { User } from "../models/User.js";
 import { nanoid } from "nanoid";
-import { IdentityUserRoles } from "../models/IdentityUserRoles.js";
+import { Identity_User_Roles } from "../models/Identity_User_Roles.js";
+import { generateRefreshToken, generateToken } from "../utils/tokenManager.js";
 export const register = async (req, res) => {
     const { 
-            school_id, userName,name,
-            phoneNumber,dateBirth,email, picture,
+            school_id, type_id, user_name,name,
+            phone_number,date_birth,email, picture,
             password 
         } = req.body;
  
@@ -12,9 +13,9 @@ export const register = async (req, res) => {
         let user = await User.findOne({email});
         if(user) throw { code: 1100};
         user = new User({ 
-            school_id, account_number: nanoid(6), userName,name,
-            phoneNumber, dateBirth,email, picture,
-            password, status: false  
+            school_id, type_id, account_number: nanoid(6), user_name,name,
+            phone_number, date_birth,email, picture,
+            password, status: true  
         });
         
         await user.save();
@@ -35,8 +36,14 @@ export const register = async (req, res) => {
 
 export const Users = async(req, res) => {
     try {
-        const  { _id , school_id, userName, name, phoneNumber, dateBirth, email  } = await User.find().exec();
-        return res.json({ status: false, message: "Usuarios obtenidos correctamente", userInfo: { _id , school_id, userName, name, phoneNumber, dateBirth, email }})
+        const  { _id ,school_id, type_id, user_name,name, phone_number,date_birth,email, picture } = await User.find().exec();
+        
+        return res.json(
+            { 
+                status: false, 
+                message: "Usuarios obtenidos correctamente", 
+                userInfo: { _id ,school_id, type_id, user_name,name,phone_number,date_birth,email, picture }
+            })
     } catch (error) {
         return res.status(500).json({status: false, message: "Error de servidor"})
     }
@@ -44,8 +51,12 @@ export const Users = async(req, res) => {
 
 export const infoUser = async(req, res) => {
     try {
-        const  { _id , school_id, userName, name, phoneNumber, dateBirth, email  } = await User.findById(req.uid).lean();
-        return res.json({ status: true, message: "Usuario obtenido correctamente", userInfo: { _id , school_id, userName, name, phoneNumber, dateBirth, email }})
+        const  { _id ,school_id, type_id, user_name,name, phone_number,date_birth,email, picture  } = await User.findById(req.uid).lean();
+        return res.json({ 
+            status: true, 
+            message: "Usuario obtenido correctamente", 
+            userInfo: { _id ,school_id, type_id, user_name,name, phone_number,date_birth,email, picture }
+        })
     } catch (error) {
         return res.status(500).json({status: false, message: "Error de servidor"})
     }
@@ -54,16 +65,16 @@ export const infoUser = async(req, res) => {
 export const getUsersByRole = async(req, res) => {
     try {
         const { rolId } = req.params;
-        const roles = await IdentityUserRoles
+        const roles = await Identity_User_Roles
                             .find({role_id: rolId})
                             .populate({ path: "user_id", model: "User"})
                             .exec();
 
         const usuarios = roles.map(x => (
              {
-                "userId": x.user_id._id,
+                "user_id": x.user_id._id,
                 "email": x.user_id.email,
-                "userName": x.user_id.userName,
+                "user_name": x.user_id.user_name,
                 "name": x.user_id.name
             }
         ));
@@ -76,7 +87,7 @@ export const getUsersByRole = async(req, res) => {
 
 export const update = async (req, res) => {
     const { 
-            name,phoneNumber, email, picture
+            name,phone_number, email, picture, date_birth
         } = req.body;
  
     const { userId } = req.params
@@ -88,9 +99,10 @@ export const update = async (req, res) => {
 
         if(!user._id.equals(req.uid)) return res.status(401).json({ status: false, message: "No esta autorizado"});
         user.name = name;
-        user.phoneNumber = phoneNumber;
+        user.phone_number = phone_number;
         user.email = email;
         user.picture = picture;
+        user.date_birth = date_birth;
 
         await user.save();
 
@@ -106,20 +118,21 @@ export const update = async (req, res) => {
 
 export const updateAdmin = async (req, res) => {
     const { 
-            name,phoneNumber, email, picture
+            name,phone_number, email, picture, date_birth
         } = req.body;
  
     const { userId } = req.params
     try {
 
-        let user = await User.findById(uid);
+        let user = await User.findById(userId);
 
         if(!user) return res.status(404).json({ status: false, message: "El usuario no existe"})
 
         user.name = name;
-        user.phoneNumber = phoneNumber;
+        user.phone_number = phone_number;
         user.email = email;
         user.picture = picture;
+        user.date_birth = date_birth;
 
         await user.save();
 

@@ -41,17 +41,20 @@ export const bodyRegisterValidator = [
     body("school_id", "Formato incorrecto")
         .trim()
         .notEmpty(),
-    body("userName", "Formato incorrecto")
+    body("type_id", "Formato incorrecto")
+        .trim()
+        .notEmpty(),
+    body("user_name", "Formato incorrecto")
         .trim()
         .notEmpty(),
     body("name", "Formato incorrecto")
         .trim()
         .notEmpty(),
-    body("phoneNumber", "Formato incorrecto")
+    body("phone_number", "Formato incorrecto")
         .trim()
         .notEmpty()
         .isLength( { min: 8, max: 8 }),
-    body("dateBirth", "Formato incorrecto")
+    body("date_birth", "Formato incorrecto")
         .trim()
         .notEmpty(),
     body('email', "Formato incorrecto")
@@ -79,11 +82,11 @@ export const bodyUpdateValidator = [
     body("name", "Formato incorrecto")
         .trim()
         .notEmpty(),
-    body("phoneNumber", "Formato incorrecto")
+    body("phone_number", "Formato incorrecto")
         .trim()
         .notEmpty()
         .isLength( { min: 8, max: 8 }),
-    body("dateBirth", "Formato incorrecto")
+    body("date_birth", "Formato incorrecto")
         .trim()
         .notEmpty(),
     body('email', "Formato incorrecto")
@@ -103,17 +106,20 @@ export const bodyLoginValidator = [
     validationResultExpress
 ];
 
-export const bodyRolValidator = [
+export const bodyRoleValidator = [
+    body("code", "Formato Incorrecto")
+        .trim()
+        .notEmpty(),
     body("name", "Formato Incorrecto")
-    .trim()
-    .notEmpty(),
+        .trim()
+        .notEmpty(),
     body("description", "Formato Incorrecto")
-    .trim()
-    .notEmpty(),
+        .trim()
+        .notEmpty(),
     validationResultExpress
 ];
 
-export const bodyUserRolValidator = [
+export const bodyUserRoleValidator = [
     body("user_id", "Formato Incorrecto")
     .trim()
     .notEmpty(),
@@ -122,3 +128,78 @@ export const bodyUserRolValidator = [
     .notEmpty(),
     validationResultExpress
 ];
+
+//#region Configuracion 
+
+export const bodyUserTypeValidator = [
+    body("code", "Formato Incorrecto")
+    .trim()
+    .notEmpty()
+    .isLength({ max: 3 }),
+    body("title", "Formato Incorrecto")
+        .trim()
+        .notEmpty()
+        .isLength({ max: 50 }),
+    body("description", "Formato Incorrecto")
+        .trim()
+        .notEmpty()
+        .isLength({ max: 250 }),
+        validationResultExpress
+];
+
+export const bodyCurrencyTypeValidator = [
+    body("code", "Formato Incorrecto")
+        .trim()
+        .notEmpty()
+        .isLength({ max: 3 }),
+    body("name", "Formato Incorrecto")
+        .trim()
+        .notEmpty()
+        .isLength({ max: 50 }),
+    validationResultExpress
+];
+
+export const bodyPlanTypeValidator = [
+    body("code", "Formato Incorrecto")
+        .trim()
+        .notEmpty()
+        .isLength({ max: 3 }),
+    body("name", "Formato Incorrecto")
+        .trim()
+        .notEmpty()
+        .isLength({ max: 50 }),
+    body("description", "Formato Incorrecto")
+        .trim()
+        .notEmpty()
+        .isLength({ max: 250 }),
+    body("currency_id", "Formato Incorrecto")
+        .trim()
+        .notEmpty(),
+    body("price", "Formato Incorrecto")
+        .trim()
+        .isDecimal()
+        .notEmpty(),
+    validationResultExpress
+];
+
+//#endregion end configuration
+
+//#region school
+export const bodySchoolValidator = [
+    body("plan_id", "Formato Incorrecto")
+        .trim()
+        .notEmpty(),
+    body("name", "Formato Incorrecto")
+        .trim()
+        .notEmpty(),
+    body("description", "Formato Incorrecto")
+        .trim()
+        .notEmpty()
+        .isLength({ max: 250 }),
+
+    body("address", "Formato Incorrecto")
+        .trim()
+        .notEmpty(),
+    validationResultExpress
+];
+//#endregion end school

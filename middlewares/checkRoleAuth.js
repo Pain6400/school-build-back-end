@@ -1,9 +1,9 @@
-import { IdentityUserRoles } from "../models/IdentityUserRoles.js"
+import { Identity_User_Roles } from "../models/Identity_User_Roles.js"
 
 
 export const checkRoleAuth = (rolesAllow) => async(req, res, next) => {
     try {
-        const userRoles = await IdentityUserRoles
+        const userRoles = await Identity_User_Roles
                                 .find({ user_id: req.uid })
                                 .populate({ path: "role_id", model: "Role"})
                                 .exec();

@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import bcryptjs from "bcryptjs";
-
-const UserShema = new mongoose.Schema({
+const { Schema, model } = mongoose;
+const UserShema = new Schema({
     school_id: {
         type: Schema.Types.ObjectId,
         required: true,
@@ -36,7 +36,7 @@ const UserShema = new mongoose.Schema({
         require: true,
         trim: true,
     },
-    dateBirth: {
+    date_birth: {
         type: Date,
         require: true,
         trim: true,
@@ -84,4 +84,4 @@ UserShema.methods.comparePassrowd = async function(candidatePassword) {
     return await bcryptjs.compare(candidatePassword, this.password);
 }
 
-export const User = mongoose.model('User', UserShema);
+export const User = model('User', UserShema);
