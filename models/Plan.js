@@ -21,7 +21,7 @@ const PlanSchema = new Schema({
         trim: true,
         max: 250
     },
-    currencyId: {
+    currency_id: {
         type: Schema.Types.ObjectId,
         required: true,
         ref: "Currency"

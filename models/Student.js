@@ -2,7 +2,12 @@ import mongoose from "mongoose";
 const { Schema, model } = mongoose;
 
 const ClassSchema = new Schema({
-    ganderId: {
+    user_id: {
+        type: Schema.Types.ObjectId,
+        required: true,
+        ref: "User"
+    },
+    gander_id: {
         type: Schema.Types.ObjectId,
         required: true,
         ref: "Gender"
@@ -13,19 +18,19 @@ const ClassSchema = new Schema({
         trim: true,
         max: 50
     },
-    middleName: {
+    middle_name: {
         type: Number,
         require: true,
         trim: true,
         max: 50
     },
-    lastName: {
+    last_name: {
         type: Number,
         require: true,
         trim: true,
         max: 50
     },
-    birthDate: {
+    birth_date: {
         type: Date,
         require: false
     },
@@ -47,7 +52,7 @@ const ClassSchema = new Schema({
         type: Boolean,
         require: true,
     },
-    joinDate: {
+    join_date: {
         type: Date,
         require: true
     }

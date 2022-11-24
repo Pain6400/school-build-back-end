@@ -34,4 +34,4 @@ IdentityUserRolesSchema.pre("save", async function(next) {
 
 IdentityUserRolesSchema.index({ user_id: 1, role_id: 1  }, { unique: true });
 
-export const IdentityUserRoles = model("IdentityUserRoles", IdentityUserRolesSchema)
+export const Identity_User_Roles = model("Identity_User_Roles", IdentityUserRolesSchema)

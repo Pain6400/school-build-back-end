@@ -8,12 +8,12 @@ const ClassSchema = new Schema({
         trim: true,
         max: 50
     },
-    classRoomId: {
+    class_room_id: {
         type: Schema.Types.ObjectId,
         required: true,
         ref: "ClassRoom"
     },
-    teacherId: {
+    teacher_id: {
         type: Schema.Types.ObjectId,
         required: true,
         ref: "Teacher"

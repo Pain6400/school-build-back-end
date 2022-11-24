@@ -1,4 +1,4 @@
-import { IdentityUserRoles } from "../models/IdentityUserRoles.js";
+import { Identity_User_Roles } from "../models/Identity_User_Roles.js";
 import { Role } from "../models/Role.js"
 
 export const getRoles = async(req, res) => {
@@ -37,7 +37,7 @@ export const createRole = async(req, res) => {
 
 export const usuarioRoles = async(req, res) => {
     try {
-        const roles = await IdentityUserRoles.find();
+        const roles = await Identity_User_Roles.find();
 
         return res.status(200).json({ status: true, message: "Peticion Exitosa", roles}); 
     } catch (error) {
@@ -48,7 +48,7 @@ export const usuarioRoles = async(req, res) => {
 export const usuarioRolesByUserId = async(req, res) => {
     try {
         const { userId } = req.params;
-        const roles = await IdentityUserRoles.find({user_id: userId});
+        const roles = await Identity_User_Roles.find({user_id: userId});
 
         return res.status(200).json({ status: true, message: "Peticion Exitosa", roles}); 
     } catch (error) {
@@ -59,7 +59,7 @@ export const usuarioRolesByUserId = async(req, res) => {
 export const createUserRole = async(req, res) => {
     try {
         const { user_id, role_id } = req.body;
-        const userRole = new IdentityUserRoles({ user_id, role_id });
+        const userRole = new Identity_User_Roles({ user_id, role_id });
         await userRole.save();
         return res.status(201).json({ status: true, message: "Role asignado a usuario correctamente", userRole })
     } catch (error) {
@@ -70,7 +70,7 @@ export const createUserRole = async(req, res) => {
 export const deleteUserRole = async(req, res) => {
     try {
         const { userRolId } = req.params;
-        const userRole = IdentityUserRoles.findById(userRolId);
+        const userRole = Identity_User_Roles.findById(userRolId);
         if(!userRole) return res.status(403).json({ status: false, message: "El rol no existe" }); 
 
         await userRole.remove();

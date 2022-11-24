@@ -2,16 +2,16 @@ import mongoose from "mongoose";
 const { Schema, model } = mongoose;
 
 const StudentParentSchema = new Schema({
-    studentId: {
+    student_id: {
         type: Schema.Types.ObjectId,
         required: true,
         ref: "Student"
     },
-    parentId: {
+    parent_id: {
         type: Schema.Types.ObjectId,
         required: true,
         ref: "Parent"
     },
 });
 
-export const StudentParent = model("StudentParent", StudentParentSchema);
+export const Student_Parent = model("Student_Parent", StudentParentSchema);

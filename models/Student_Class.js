@@ -2,12 +2,12 @@ import mongoose from "mongoose";
 const { Schema, model } = mongoose;
 
 const StudentClassSchema = new Schema({
-    studentId: {
+    student_id: {
         type: Schema.Types.ObjectId,
         required: true,
         ref: "Student"
     },
-    classId: {
+    class_id: {
         type: Schema.Types.ObjectId,
         required: true,
         ref: "Class"
@@ -22,4 +22,4 @@ const StudentClassSchema = new Schema({
     }
 });
 
-export const StudentClass = model("StudentClass", StudentClassSchema);
+export const Student_Class = model("Student_Class", StudentClassSchema);

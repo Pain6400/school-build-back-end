@@ -1,17 +1,24 @@
 import mongoose from "mongoose";
 import bcryptjs from "bcryptjs";
-const userShema = new mongoose.Schema({
+
+const UserShema = new mongoose.Schema({
     school_id: {
         type: Schema.Types.ObjectId,
         required: true,
         ref: "School"
     },
+    type_id: {
+        type: Schema.Types.ObjectId,
+        required: true,
+        ref: "UserType"
+    },
     account_number: {
         type: String,
         require: true,
         trim: true,
+        unique: true
     },
-    userName: {
+    user_name: {
         type: String,
         require: true,
         trim: true,
@@ -24,7 +31,7 @@ const userShema = new mongoose.Schema({
         require: true,
         trim: true,
     },
-    phoneNumber: {
+    phone_number: {
         type: Number,
         require: true,
         trim: true,
@@ -57,7 +64,7 @@ const userShema = new mongoose.Schema({
     }
 });
 
-userShema.pre("save", async function(next) {
+UserShema.pre("save", async function(next) {
     const user = this;
 
     if(!user.isModified("password")) return next();
@@ -73,8 +80,8 @@ userShema.pre("save", async function(next) {
 });
 
 
-userShema.methods.comparePassrowd = async function(candidatePassword) {
+UserShema.methods.comparePassrowd = async function(candidatePassword) {
     return await bcryptjs.compare(candidatePassword, this.password);
 }
 
-export const User = mongoose.model('User', userShema);
+export const User = mongoose.model('User', UserShema);

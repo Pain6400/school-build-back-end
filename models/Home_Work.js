@@ -1,13 +1,13 @@
 import mongoose from "mongoose";
 const { Schema, model } = mongoose;
 
-const homeWorkSchema = new Schema({
-    studentId: {
+const HomeWorkSchema = new Schema({
+    student_id: {
         type: Schema.Types.ObjectId,
         required: true,
         ref: "Student"
     },
-    dateCreate: {
+    date_create: {
         type: Date,
         require: true
     },
@@ -28,14 +28,14 @@ const homeWorkSchema = new Schema({
         require: true,
         trim: true
     },
-    dateFrom: {
+    date_from: {
         type: Date,
         require: true
     },
-    dateTo: {
+    date_to: {
         type: Date,
         require: true
     }
 });
 
-export const homeWork = model("homeWork", homeWorkSchema);
+export const Home_Work = model("Home_Work", HomeWorkSchema);

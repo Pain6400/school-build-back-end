@@ -1,23 +1,19 @@
 import mongoose from "mongoose";
 const { Schema, model } = mongoose;
 
-const ClassRoomSchema = new Schema({
-    Code: {
+const UserTypeSchema = new Schema({
+    title: {
         type: String,
         require: true,
         trim: true,
-        max: 20
-    },
-    Capacity: {
-        type: Number,
-        require: true,
-        trim: true
+        max: 50
     },
     description: {
         type: String,
         require: false,
+        trim: true,
         max: 250
     }
 });
 
-export const ClassRoom = model("ClassRoom", ClassRoomSchema);
+export const UserType = model("UserType", UserTypeSchema);

@@ -2,6 +2,16 @@ import mongoose from "mongoose";
 const { Schema, model } = mongoose;
 
 const TeacherShema = new Schema({
+    user_id: {
+        type: Schema.Types.ObjectId,
+        required: true,
+        ref: "User"
+    },
+    gender_id: {
+        type: Schema.Types.ObjectId,
+        required: true,
+        ref: "Gender"
+    },
     code: {
         type: String,
         require: true,
@@ -14,11 +24,6 @@ const TeacherShema = new Schema({
         require: false,
         trim: true,
         max: 50
-    },
-    genderId: {
-        type: Schema.Types.ObjectId,
-        required: true,
-        ref: "Gender"
     },
     email: {
         type: String,
@@ -38,7 +43,7 @@ const TeacherShema = new Schema({
         type: Boolean,
         require: true,
     },
-    joinDate: {
+    join_date: {
         type: Date,
         require: true
     }
