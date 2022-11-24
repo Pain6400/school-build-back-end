@@ -10,7 +10,7 @@ const UserShema = new mongoose.Schema({
     type_id: {
         type: Schema.Types.ObjectId,
         required: true,
-        ref: "UserType"
+        ref: "User_Type"
     },
     account_number: {
         type: String,

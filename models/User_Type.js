@@ -16,4 +16,4 @@ const UserTypeSchema = new Schema({
     }
 });
 
-export const UserType = model("UserType", UserTypeSchema);
+export const User_Type = model("User_Type", UserTypeSchema);
