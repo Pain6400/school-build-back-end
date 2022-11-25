@@ -1,5 +1,7 @@
 import mongoose from "mongoose";
 import bcryptjs from "bcryptjs";
+import { School } from "./School.js";
+import { User_Type } from "./User_Type.js"
 const { Schema, model } = mongoose;
 const UserShema = new Schema({
     school_id: {
@@ -61,6 +63,22 @@ const UserShema = new Schema({
     status: {
         type: Boolean,
         require: true
+    }
+});
+
+UserShema.pre("save", async function(next) {
+    const params = this;
+
+    try {
+        const school = await School.findById(params.school_id);
+        if(!school) throw new Error("La escuela no existe");
+
+        const userType = await User_Type.findById(params.type_id);
+        if(!userType) throw new Error("El tipo de usuario no existe");
+
+        next();
+    } catch (error) {
+        throw new Error(error.message)
     }
 });
 

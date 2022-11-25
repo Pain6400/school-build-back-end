@@ -24,6 +24,16 @@ export const createUserType = async(req, res) => {
     }
 }
 
+export const getCurrencies = async(req, res) => {
+    try {
+        const currencies = await Currency.find().exec();
+
+        return res.status(201).json({ status: true, message: "Peticion exitosa", currencies })
+    } catch (error) {
+        return res.status(500).json({ status: false, message: error.message });
+    }
+}
+
 export const createCurrency = async(req, res) => {
     try {
         const { code, name } = req.body;
@@ -31,6 +41,16 @@ export const createCurrency = async(req, res) => {
         await userType.save();
 
         return res.status(201).json({ status: true, message: "Moneda creada correctamente", userType })
+    } catch (error) {
+        return res.status(500).json({ status: false, message: error.message });
+    }
+}
+
+export const getPlans = async(req, res) => {
+    try {
+        const plans = await Plan.find().exec();
+
+        return res.status(201).json({ status: true, message: "Peticion exitosa", plans })
     } catch (error) {
         return res.status(500).json({ status: false, message: error.message });
     }

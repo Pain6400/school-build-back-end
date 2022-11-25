@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { Student } from "./Student";
 const { Schema, model } = mongoose;
 
 const HomeWorkSchema = new Schema({
@@ -35,6 +36,19 @@ const HomeWorkSchema = new Schema({
     date_to: {
         type: Date,
         require: true
+    }
+});
+
+HomeWorkSchema.pre("save", async function(next) {
+    const params = this;
+
+    try {
+        const student = await Student.findById(params.student_id);
+        if(!student) throw new Error("El estudiante no existe");
+        
+        next();
+    } catch (error) {
+        throw new Error(error.message)
     }
 });
 

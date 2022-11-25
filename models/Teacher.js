@@ -1,4 +1,6 @@
 import mongoose from "mongoose";
+import { User } from "./User.js";
+import { Gender } from "./Gender.js";
 const { Schema, model } = mongoose;
 
 const TeacherShema = new Schema({
@@ -48,5 +50,21 @@ const TeacherShema = new Schema({
         require: true
     }
 })
+
+TeacherShema.pre("save", async function(next) {
+    const params = this;
+
+    try {
+        const user = await User.findById(params.user_id);
+        if(!user) throw new Error("El usuario no existe");
+        
+        const gender = await Gender.findById(params.gander_id);
+        if(!gender) throw new Error("El genero no existe");
+        
+        next();
+    } catch (error) {
+        throw new Error(error.message)
+    }
+});
 
 export const Teacher = model("Teacher", TeacherShema);
