@@ -1,4 +1,5 @@
 import mongoose from "mongoose"
+import { Currency } from "./Currency.js";
 const { Schema, model } = mongoose;
 
 const PlanSchema = new Schema({
@@ -30,6 +31,19 @@ const PlanSchema = new Schema({
         type: mongoose.Types.Decimal128,
         require: true,
         trim: true
+    }
+});
+
+PlanSchema.pre("save", async function(next) {
+    const params = this;
+
+    try {
+        const currency = await Currency.findById(params.currency_id);
+        if(!currency) throw new Error("La moneda no existe");
+
+        next();
+    } catch (error) {
+        throw new Error(error.message)
     }
 });
 

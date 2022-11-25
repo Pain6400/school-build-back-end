@@ -2,6 +2,15 @@ import { Currency } from "../models/Currency.js";
 import { Plan } from "../models/Plan.js";
 import { User_Type } from "../models/User_Type.js";
 
+export const getUsersTypes = async(req, res) => {
+    try {
+        const usersTypes = await User_Type.find().exec();
+
+        return res.status(200).json({ status: true, message: "Peticion Exitosa", usersTypes });
+    } catch (error) {
+        return res.status(500).json({ status: false, message: error.message });
+    }
+}
 
 export const createUserType = async(req, res) => {
     try {
