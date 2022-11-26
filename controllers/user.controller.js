@@ -147,22 +147,20 @@ export const updateAdmin = async (req, res) => {
 }
 
 export const changeStaus = async (req, res) => {
-    const { 
-            status
-        } = req.body;
+
  
     const { userId } = req.params
     try {
 
-        let user = await User.findById(uid);
+        let user = await User.findById(userId);
 
         if(!user) return res.status(404).json({ status: false, message: "El usuario no existe"})
 
-        user.status = status;
+        user.status = !user.status;
 
         await user.save();
         
-        return res.status(200).json({ status: true, message: status ? "User activado": "User desactivado" });
+        return res.status(200).json({ status: true, message: user.status ? "User activado": "User desactivado" });
     } catch (error) {
         if(error.code === 1100) {
             return res.status(400).json({status: false, message: "El correo ya existe"})
