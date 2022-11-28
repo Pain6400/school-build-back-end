@@ -24,9 +24,9 @@ export const getRole = async(req, res) => {
 
 export const createRole = async(req, res) => {
     try {
-        const { code, name, description, uid} = req.body;
+        const { code, name, description} = req.body;
 
-        const role = new Role({ code, name, description, uid });
+        const role = new Role({ code, name, description });
 
         await role.save();
         return res.status(201).json({ status: true, message: "Rol creado correctamente", role })
@@ -69,8 +69,8 @@ export const createUserRole = async(req, res) => {
 
 export const deleteUserRole = async(req, res) => {
     try {
-        const { userRolId } = req.params;
-        const userRole = Identity_User_Roles.findById(userRolId);
+        const { user_id, rol_id } = req.params;
+        const userRole = Identity_User_Roles.findOne({ user_id: user_id, rol_id: rol_id });
         if(!userRole) return res.status(403).json({ status: false, message: "El rol no existe" }); 
 
         await userRole.remove();
