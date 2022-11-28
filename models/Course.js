@@ -2,6 +2,11 @@ import mongoose from "mongoose";
 const { Schema, model } = mongoose;
 
 const CourseShema = new Schema({
+    grade_id: {
+        type: Schema.Types.ObjectId,
+        required: true,
+        ref: "Grade"
+    },
     code: {
         type: String,
         require: true,

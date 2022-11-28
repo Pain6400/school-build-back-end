@@ -4,12 +4,6 @@ import { Teacher } from "./Teacher.js";
 const { Schema, model } = mongoose;
 
 const ClassSchema = new Schema({
-    name: {
-        type: Number,
-        require: true,
-        trim: true,
-        max: 50
-    },
     class_room_id: {
         type: Schema.Types.ObjectId,
         required: true,
@@ -19,6 +13,17 @@ const ClassSchema = new Schema({
         type: Schema.Types.ObjectId,
         required: true,
         ref: "Teacher"
+    },
+    grade_id: {
+        type: Schema.Types.ObjectId,
+        required: true,
+        ref: "Grade"
+    },
+    name: {
+        type: Number,
+        require: true,
+        trim: true,
+        max: 50
     },
     description: {
         type: String,
