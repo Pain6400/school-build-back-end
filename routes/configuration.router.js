@@ -23,7 +23,9 @@ router.post("/CreatPlan",requireToken,checkRoleAuth([ROLES_SETTING.SUPERADMIN]),
 router.get("/getGenders", requireToken, checkRoleAuth([ROLES_SETTING.SUPERADMIN]), getGenders);
 
 //Grade
-router.get("getGrades", requireToken, checkRoleAuth([ROLES_SETTING.SUPERADMIN]), getGrades);
-router.post("/createGrade",requireToken,checkRoleAuth([ROLES_SETTING.SUPERADMIN]), bodyPlanTypeValidator, createGrade);
-router.patch("/updateGrade",requireToken,checkRoleAuth([ROLES_SETTING.SUPERADMIN]), bodyPlanTypeValidator, updateGrade);
+router.get("getGrades", requireToken, checkRoleAuth([ROLES_SETTING.SUPERADMIN, ROLES_SETTING.ADMIN]), getGrades);
+router.post("/createGrade",requireToken,checkRoleAuth([ROLES_SETTING.SUPERADMIN, ROLES_SETTING.ADMIN]), bodyPlanTypeValidator, createGrade);
+router.patch("/updateGrade",requireToken,checkRoleAuth([ROLES_SETTING.SUPERADMIN, ROLES_SETTING.ADMIN]), bodyPlanTypeValidator, updateGrade);
+
+
 export default router;
