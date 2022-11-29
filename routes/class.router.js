@@ -6,6 +6,6 @@ import { ROLES_SETTING } from "../config/roles_setting.js";
 
 const router = Router();
 
-router.get("getStudentsByClass/:class_id", requireToken, requireToken,checkRoleAuth([ROLES_SETTING.SUPERADMIN, ROLES_SETTING.ADMIN]));
 
-export default router;
+
+export default router();
