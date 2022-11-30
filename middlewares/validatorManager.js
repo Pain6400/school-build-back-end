@@ -203,3 +203,36 @@ export const bodySchoolValidator = [
     validationResultExpress
 ];
 //#endregion end school
+
+//#region teacher 
+export const bodyTeacherValidator = [
+    body("user_id", "Formato Incorrecto")
+    .trim()
+    .notEmpty(),
+    body("gender_id", "Formato Incorrecto")
+    .trim()
+    .notEmpty(),
+    body("identidad", "Formato Incorrecto")
+    .trim()
+    .notEmpty()
+    .isLength({ min: 13, max: 13})
+    .withMessage("La longitud debe ser de 13 caracteres exactos"),
+    body("name", "Formato Incorrecto")
+    .trim()
+    .notEmpty(),
+    body("email", "Formato Incorrecto")
+    .trim()
+    .notEmpty()
+    .isEmail()
+    .withMessage("Formato de email incorrecto"),
+    body("phone", "Formato Incorrecto")
+    .trim()
+    .notEmpty()
+    .isLength({ min: 8, max: 8})
+    .withMessage("La longitud deve de ser de 8 caracteres exactos"),
+    body("join_date", "Formato Incorrecto")
+    .trim()
+    .notEmpty(),
+    validationResultExpress
+];
+//#region 

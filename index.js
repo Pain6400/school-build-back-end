@@ -10,6 +10,7 @@ import roleRouter from './routes/role.router.js';
 import configurationRouter from './routes/configuration.router.js';
 import schoolRouter from './routes/school.router.js';
 import linkRouter from './routes/link.route.js';
+import teacherRouter from './routes/teacher.router.js';
 const app = express();
 
 const whiteList = [
@@ -34,6 +35,7 @@ app.use('/api/v1/users', userRouter);
 app.use('/api/v1/roles', roleRouter);
 app.use('/api/v1/configuration', configurationRouter);
 app.use('/api/v1/school', schoolRouter);
+app.use('/api/v1/teacher', teacherRouter);
 app.use('/api/v1/links', linkRouter);
 
 const PORT = process.env.PORT || 5000;

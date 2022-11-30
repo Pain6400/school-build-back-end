@@ -22,8 +22,8 @@ export const getTeacherByClass = async(req, res) => {
 
 export const createTeacher = async(req, res) => {
     try {
-        const { user_id, gender_id, code, name, email, phone, join_date } = req.body;
-        const teacher = Teacher({ user_id, gender_id, code, name, email, phone, status: true, join_date });
+        const { user_id, gender_id, identidad, name, email, phone, join_date } = req.body;
+        const teacher = Teacher({ user_id, gender_id, identidad, name, email, phone, status: true, join_date });
 
         await teacher.save();
 

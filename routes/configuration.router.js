@@ -21,6 +21,7 @@ router.post("/CreatPlan",requireToken,checkRoleAuth([ROLES_SETTING.SUPERADMIN]),
 
 //gender
 router.get("/getGenders", requireToken, checkRoleAuth([ROLES_SETTING.SUPERADMIN]), getGenders);
+router.post("")
 
 //Grade
 router.get("getGrades", requireToken, checkRoleAuth([ROLES_SETTING.SUPERADMIN, ROLES_SETTING.ADMIN]), getGrades);

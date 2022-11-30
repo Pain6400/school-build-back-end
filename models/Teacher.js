@@ -14,12 +14,13 @@ const TeacherShema = new Schema({
         required: true,
         ref: "Gender"
     },
-    code: {
+    identidad: {
         type: String,
         require: true,
         unique: true,
         trim: true,
-        max: 10
+        max: 13,
+        min: 13
     },
     name: {
         type: String,

@@ -2,6 +2,36 @@ import { User } from "../models/User.js";
 import { nanoid } from "nanoid";
 import { Identity_User_Roles } from "../models/Identity_User_Roles.js";
 import { generateRefreshToken, generateToken } from "../utils/tokenManager.js";
+
+export const getAllUsers = async(req, res) => {
+    try {
+        const users = await User
+            .find()
+            .exec();
+
+        const allUsers = users.map(item => ({
+            "_id" : item._id,
+            "school_id" :item.school_id, 
+            "type_id" :item.type_id, 
+            "user_name" :item.user_name,
+            "name" :item.name, 
+            "phone_number" :item.phone_number,
+            "date_birth" :item.date_birth,
+            "email" :item.email, 
+            "picture" :item.picture
+        }));
+
+        return res.json(
+            { 
+                status: false, 
+                message: "Usuarios obtenidos correctamente", 
+                allUsers
+            })
+    } catch (error) {
+        return res.status(500).json({status: false, message: error.message})
+    }
+}
+
 export const register = async (req, res) => {
     const { 
             school_id, type_id, user_name,name,
@@ -31,21 +61,6 @@ export const register = async (req, res) => {
         }
 
         return res.status(500).json({status: false, message: error.message})
-    }
-}
-
-export const Users = async(req, res) => {
-    try {
-        const  { _id ,school_id, type_id, user_name,name, phone_number,date_birth,email, picture } = await User.find().exec();
-        
-        return res.json(
-            { 
-                status: false, 
-                message: "Usuarios obtenidos correctamente", 
-                userInfo: { _id ,school_id, type_id, user_name,name,phone_number,date_birth,email, picture }
-            })
-    } catch (error) {
-        return res.status(500).json({status: false, message: "Error de servidor"})
     }
 }
 
