@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { checkRoleAuth } from "../middlewares/checkRoleAuth.js";
 import { requireToken } from "../middlewares/requireToken.js";
-import { bodyCurrencyTypeValidator, bodyGenderValidator, bodyPlanTypeValidator, bodyUserTypeValidator } from "../middlewares/validatorManager.js";
+import { bodyCurrencyTypeValidator, bodyGenderValidator, bodyGradeValidator, bodyPlanTypeValidator, bodyUserTypeValidator } from "../middlewares/validatorManager.js";
 import { ROLES_SETTING } from "../config/roles_setting.js";
 import { createCurrency, createGender, createGrade, createPlan, createUserType, getCurrencies, getGenders, getGrades, getPlans, getUsersTypes, updateGrade } from "../controllers/configuracion.controller.js";
 
@@ -24,8 +24,8 @@ router.get("/getGenders", requireToken, checkRoleAuth([ROLES_SETTING.SUPERADMIN]
 router.post("/createGender", requireToken, checkRoleAuth([ROLES_SETTING.SUPERADMIN]), bodyGenderValidator, createGender)
 
 //Grade
-router.get("getGrades", requireToken, checkRoleAuth([ROLES_SETTING.SUPERADMIN, ROLES_SETTING.ADMIN]), getGrades);
-router.post("/createGrade",requireToken,checkRoleAuth([ROLES_SETTING.SUPERADMIN, ROLES_SETTING.ADMIN]), bodyPlanTypeValidator, createGrade);
+router.get("/getGrades", requireToken, checkRoleAuth([ROLES_SETTING.SUPERADMIN, ROLES_SETTING.ADMIN]), getGrades);
+router.post("/createGrade",requireToken,checkRoleAuth([ROLES_SETTING.SUPERADMIN, ROLES_SETTING.ADMIN]), bodyGradeValidator, createGrade);
 router.patch("/updateGrade",requireToken,checkRoleAuth([ROLES_SETTING.SUPERADMIN, ROLES_SETTING.ADMIN]), bodyPlanTypeValidator, updateGrade);
 
 

@@ -83,10 +83,10 @@ export const getGenders = async(req, res) => {
 export const createGender = async(req, res) => {
     try {
         const { code, description } = req.body;
-        const grade = new Gender({ code, description });
-        await grade.save();
+        const gender = new Gender({ code, description });
+        await gender.save();
 
-        return res.status(201).json({ status: true, message: "Genero creado correctamente", grade })
+        return res.status(201).json({ status: true, message: "Genero creado correctamente", gender })
     } catch (error) {
         return res.status(500).json({ status: false, message: error.message });
     }

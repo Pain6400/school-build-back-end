@@ -197,6 +197,22 @@ export const bodyGenderValidator = [
 ];
 //#endregion
 
+//#region Grade
+export const bodyGradeValidator = [
+    body("code", "Formato Incorrecto")
+        .trim()
+        .notEmpty(),
+    body("name", "Formato Incorrecto")
+    .trim()
+    .notEmpty(),
+    body("description", "Formato Incorrecto")
+        .trim()
+        .notEmpty()
+        .isLength({ max: 250 }),
+    validationResultExpress
+];
+//#endregion
+
 //#region school
 export const bodySchoolValidator = [
     body("plan_id", "Formato Incorrecto")

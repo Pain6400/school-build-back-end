@@ -54,12 +54,12 @@ const TeacherShema = new Schema({
 
 TeacherShema.pre("save", async function(next) {
     const params = this;
-
+    console.log(params)
     try {
         const user = await User.findById(params.user_id);
         if(!user) throw new Error("El usuario no existe");
         
-        const gender = await Gender.findById(params.gander_id);
+        const gender = await Gender.findById(params.gender_id);
         if(!gender) throw new Error("El genero no existe");
         
         next();

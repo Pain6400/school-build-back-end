@@ -4,6 +4,11 @@ import { Teacher } from "./Teacher.js";
 const { Schema, model } = mongoose;
 
 const ClassSchema = new Schema({
+    school_id: {
+        type: Schema.Types.ObjectId,
+        required: true,
+        ref: "School"
+    },
     class_room_id: {
         type: Schema.Types.ObjectId,
         required: true,

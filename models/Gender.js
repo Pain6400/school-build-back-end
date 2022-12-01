@@ -9,7 +9,7 @@ const GenderSchema = new Schema({
         unique: true,
         max: 1
     },
-    descripcion: {
+    description: {
         type: String,
         require: true,
         trim: true,
