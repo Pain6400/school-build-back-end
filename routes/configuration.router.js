@@ -1,9 +1,9 @@
 import { Router } from "express";
 import { checkRoleAuth } from "../middlewares/checkRoleAuth.js";
 import { requireToken } from "../middlewares/requireToken.js";
-import { bodyCurrencyTypeValidator, bodyPlanTypeValidator, bodyUserTypeValidator } from "../middlewares/validatorManager.js";
+import { bodyCurrencyTypeValidator, bodyGenderValidator, bodyPlanTypeValidator, bodyUserTypeValidator } from "../middlewares/validatorManager.js";
 import { ROLES_SETTING } from "../config/roles_setting.js";
-import { createCurrency, createGrade, createPlan, createUserType, getCurrencies, getGenders, getGrades, getPlans, getUsersTypes, updateGrade } from "../controllers/configuracion.controller.js";
+import { createCurrency, createGender, createGrade, createPlan, createUserType, getCurrencies, getGenders, getGrades, getPlans, getUsersTypes, updateGrade } from "../controllers/configuracion.controller.js";
 
 const router = Router();
 
@@ -21,7 +21,7 @@ router.post("/CreatPlan",requireToken,checkRoleAuth([ROLES_SETTING.SUPERADMIN]),
 
 //gender
 router.get("/getGenders", requireToken, checkRoleAuth([ROLES_SETTING.SUPERADMIN]), getGenders);
-router.post("")
+router.post("/createGender", requireToken, checkRoleAuth([ROLES_SETTING.SUPERADMIN]), bodyGenderValidator, createGender)
 
 //Grade
 router.get("getGrades", requireToken, checkRoleAuth([ROLES_SETTING.SUPERADMIN, ROLES_SETTING.ADMIN]), getGrades);
