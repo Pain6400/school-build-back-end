@@ -11,6 +11,7 @@ import configurationRouter from './routes/configuration.router.js';
 import schoolRouter from './routes/school.router.js';
 import linkRouter from './routes/link.route.js';
 import teacherRouter from './routes/teacher.router.js';
+import classRouter from './routes/class.router.js';
 const app = express();
 
 const whiteList = [
@@ -20,6 +21,7 @@ const whiteList = [
 
 app.use(cors({
     origin: function(origin, callback) {
+        console.log(origin)
         if(!origin || whiteList.includes(origin)){
             return callback(null, origin);
         }
@@ -36,6 +38,7 @@ app.use('/api/v1/roles', roleRouter);
 app.use('/api/v1/configuration', configurationRouter);
 app.use('/api/v1/school', schoolRouter);
 app.use('/api/v1/teacher', teacherRouter);
+app.use('/api/v1/class', classRouter);
 app.use('/api/v1/links', linkRouter);
 
 const PORT = process.env.PORT || 5000;

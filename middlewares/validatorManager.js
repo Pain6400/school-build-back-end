@@ -265,3 +265,28 @@ export const bodyTeacherValidator = [
     validationResultExpress
 ];
 //#region 
+
+//#region Class
+export const bodyClassValidator = [
+    body("school_id", "Formato Incorrecto")
+        .trim()
+        .notEmpty(),
+    body("class_room_id", "Formato Incorrecto")
+        .trim()
+        .notEmpty(),
+    body("teacher_id", "Formato Incorrecto")
+        .trim()
+        .notEmpty(),
+    body("grade_id", "Formato Incorrecto")
+        .trim()
+        .notEmpty(),
+    body("name", "Formato Incorrecto")
+        .trim()
+        .notEmpty(),
+    body("description", "Formato Incorrecto")
+        .trim()
+        .notEmpty()
+        .isLength({ max: 250 }),
+    validationResultExpress
+];
+//#endregion

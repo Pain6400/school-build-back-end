@@ -1,13 +1,13 @@
 import { Router } from "express";
 import { checkRoleAuth } from "../middlewares/checkRoleAuth.js";
 import { requireToken } from "../middlewares/requireToken.js";
-import {  } from "../middlewares/validatorManager.js";
+import { bodyClassValidator } from "../middlewares/validatorManager.js";
 import { ROLES_SETTING } from "../config/roles_setting.js";
-import { getClassByScool } from "../controllers/class.controller.js";
+import { createClass, getClassByScool } from "../controllers/class.controller.js";
 
 const router = Router();
 
 router.get("/getClassByScool/:school_id",requireToken, checkRoleAuth([ROLES_SETTING.SUPERADMIN, ROLES_SETTING.ADMIN]), getClassByScool);
+router.post("/createClass", requireToken, checkRoleAuth([ROLES_SETTING.SUPERADMIN, ROLES_SETTING.ADMIN]), bodyClassValidator, createClass);
 
-
-export default router();
+export default router;
