@@ -2,6 +2,8 @@ import mongoose from "mongoose";
 import { Class_Room } from "./Class_Room.js"
 import { School } from "./School.js";
 import { Teacher } from "./Teacher.js";
+import { Grade } from "./Grade.js";
+
 const { Schema, model } = mongoose;
 
 const ClassSchema = new Schema({
@@ -26,7 +28,7 @@ const ClassSchema = new Schema({
         ref: "Grade"
     },
     name: {
-        type: Number,
+        type: String,
         require: true,
         trim: true,
         max: 50
@@ -51,6 +53,8 @@ ClassSchema.pre("save", async function(next) {
         const teacher = await Teacher.findById(params.teacher_id);
         if(!teacher) throw new Error("El maestro no existe");
         
+        const grade = await Grade.findById(params.grade_id);
+        if(!grade) throw new Error("El grado no existe");
         next();
     } catch (error) {
         throw new Error(error.message)

@@ -2,19 +2,17 @@ import { Class } from "../models/Class.js";
 import { Teacher } from "../models/Teacher.js";
 
 
-export const getTeacherByClass = async(req, res) => {
+export const getTeacherBySchool = async(req, res) => {
     try {
-        const { class_id } = req.params;
-        const teachers = await Class
-                    .find({ class_id: class_id})
-                    .populate({ path: "teacher_id", model: "Teacher"})
-                    .exec()
-                    .map(item => {
-                        item.teacher_id.name
-                    });
+        const { school_id } = req.params;
+        const teachers = await Teacher
+                    .find()
+                    .populate({ path: "user_id", model: "User", select: "school_id"})
+                    .select({ gender_id: 1, identidad: 1, name: 1, email: 1, phone: 1, status: 1});
 
-        console.log(teachers)
-        return res.status(200).json({ status: true, message: "Peticion Exitosa", teachers });
+        const teachersFiller = teachers.filter(f => f.user_id.school_id == school_id && f.status == true);      
+
+        return res.status(200).json({ status: true, message: "Peticion Exitosa", teachersFiller });
     } catch (error) {
         return res.status(500).json({ status: false, message: error.message });
     }

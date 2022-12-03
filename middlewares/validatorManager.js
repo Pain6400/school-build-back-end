@@ -289,4 +289,20 @@ export const bodyClassValidator = [
         .isLength({ max: 250 }),
     validationResultExpress
 ];
+
+export const bodyClassRoomValidator = [
+    body("code", "Formato Incorrecto")
+        .trim()
+        .notEmpty(),
+    body("capacity", "Formato Incorrecto")
+        .trim()
+        .notEmpty()
+        .isInt(),
+    body("description", "Formato Incorrecto")
+        .trim()
+        .notEmpty()
+        .isLength({ max: 250 }),
+    validationResultExpress
+];
+
 //#endregion
