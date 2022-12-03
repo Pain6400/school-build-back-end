@@ -306,3 +306,37 @@ export const bodyClassRoomValidator = [
 ];
 
 //#endregion
+
+//#region estudiente
+
+    export const bodyStudentValidator = [
+        body("user_id", "Formato Incorrecto")
+            .trim()
+            .notEmpty(),
+        body("gander_id", "Formato Incorrecto")
+            .trim()
+            .notEmpty(),
+        body("name", "Formato Incorrecto")
+            .trim()
+            .notEmpty(),
+        body("middle_name", "Formato Incorrecto")
+            .trim()
+            .notEmpty(),
+        body("last_name", "Formato Incorrecto")
+            .trim()
+            .notEmpty(),
+        body("birth_date", "Formato Incorrecto")
+            .trim()
+            .notEmpty(),
+        body("email", "Formato Incorrecto")
+            .trim()
+            .notEmpty()
+            .isEmail(),
+        body("phone", "Formato Incorrecto")
+            .trim()
+            .notEmpty()
+            .isInt()
+            .isLength({ max: 8, min: 8}),
+        validationResultExpress
+    ];
+//#endregion

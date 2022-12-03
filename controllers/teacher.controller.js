@@ -1,4 +1,3 @@
-import { Class } from "../models/Class.js";
 import { Teacher } from "../models/Teacher.js";
 
 
