@@ -15,19 +15,19 @@ const StudentSchema = new Schema({
         ref: "Gender"
     },
     name: {
-        type: Number,
+        type: String,
         require: true,
         trim: true,
         max: 50
     },
     middle_name: {
-        type: Number,
+        type: String,
         require: true,
         trim: true,
         max: 50
     },
     last_name: {
-        type: Number,
+        type: String,
         require: true,
         trim: true,
         max: 50

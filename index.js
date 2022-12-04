@@ -12,6 +12,7 @@ import schoolRouter from './routes/school.router.js';
 import linkRouter from './routes/link.route.js';
 import teacherRouter from './routes/teacher.router.js';
 import classRouter from './routes/class.router.js';
+import studentRouter from './routes/student.router.js';
 const app = express();
 
 const whiteList = [
@@ -38,6 +39,7 @@ app.use('/api/v1/configuration', configurationRouter);
 app.use('/api/v1/school', schoolRouter);
 app.use('/api/v1/teacher', teacherRouter);
 app.use('/api/v1/class', classRouter);
+app.use('/api/v1/student', studentRouter);
 app.use('/api/v1/links', linkRouter);
 
 const PORT = process.env.PORT || 5000;

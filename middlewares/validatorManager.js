@@ -339,4 +339,20 @@ export const bodyClassRoomValidator = [
             .isLength({ max: 8, min: 8}),
         validationResultExpress
     ];
+
+    export const bodyStudentToClassValidator = [
+        body("student_id", "Formato Incorrecto")
+            .trim()
+            .notEmpty(),
+        body("class_id", "Formato Incorrecto")
+            .trim()
+            .notEmpty(),
+        body("dateFrom", "Formato Incorrecto")
+            .trim()
+            .notEmpty(),
+        body("dateTo", "Formato Incorrecto")
+            .trim()
+            .notEmpty(),
+        validationResultExpress
+    ];
 //#endregion

@@ -46,3 +46,17 @@ export const createStudent = async(req, res) => {
         return res.status(500).json({status: false, message: error.message});
     }
 }
+
+export const addStudentToClass = async(req, res) => {
+    try {
+        const { student_id, class_id, dateFrom, dateTo } = req.body;
+
+        const studentToClass = new Student_Class({ student_id, class_id, dateFrom, dateTo })
+
+        await studentToClass.save();
+        return res.json({ status: true, message: "Estudiante agregado a una clase correctamente", studentToClass });
+        
+    } catch (error) {
+        return res.status(500).json({status: false, message: error.message});
+    }
+}
