@@ -9,7 +9,7 @@ export const getStudentsBySchool = async(req, res) => {
                         .populate({ path: "user_id", model: "User", select: "school_id"})
                         .select({ name: 1, middle_name: 1, last_name: 1, email: 1, phone: 1, status:1 });
 
-        students.filter(f => f.user_id.school_id == school_id && f.status == true);      
+         students = students.filter(f => f.user_id.school_id == school_id && f.status == true);      
 
         return res.status(200).json({ status: true, message: "Peticion Exitosa", students });
 
@@ -23,9 +23,14 @@ export const getStudentsByClass = async(req, res) => {
         const { class_id } = req.params;
         const students = await Student_Class
                     .find({ class_id: class_id })
-                    .populate("Student")
-                    .exec();
-
+                    .populate(
+                        { 
+                            path: "student_id", 
+                            model: "Student", 
+                            select: { name: 1, middle_name: 1, last_name: 1, email: 1, phone: 1 }
+                        })
+                    .select({class_id: 1, dateFrom: 1, dateTo: 1 });
+                    
         return res.json({ status: false, message: "Estudiantes obtenidos correctamente", students })
 
     } catch (error) {

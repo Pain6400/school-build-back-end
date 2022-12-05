@@ -349,10 +349,14 @@ export const bodyClassRoomValidator = [
             .notEmpty(),
         body("dateFrom", "Formato Incorrecto")
             .trim()
-            .notEmpty(),
+            .notEmpty()
+            .isDate()
+            .withMessage("Debe ingresar un formato de fecha"),
         body("dateTo", "Formato Incorrecto")
             .trim()
-            .notEmpty(),
+            .notEmpty()
+            .isDate()
+            .withMessage("Debe ingresar un formato de fecha"),
         validationResultExpress
     ];
 //#endregion
