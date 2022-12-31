@@ -18,8 +18,8 @@ export const generateRefreshToken = (uid, res) => {
 
         if (process.env.NODE_ENV === 'Production') {
             res.cookie("refreshToken", refreshToken, {
-                httpOnly: true,
-                sameSite: 'none',
+                enabled: true,
+                httpOnly: false,
                 secure: true,
                 expires: new Date(Date.now() + expiresIn * 1000)
             });
