@@ -16,19 +16,13 @@ export const generateRefreshToken = (uid, res) => {
             expiresIn
         });
 
-        if (process.env.NODE_ENV === 'Production') {
-            res.cookie("refreshToken", refreshToken, {
-                enabled: true,
-                httpOnly: false,
-                secure: true,
-                expires: new Date(Date.now() + expiresIn * 1000)
-            });
-        } else {
-            res.cookie("refreshToken", refreshToken, {
-                httpOnly: true,
-                expires: new Date(Date.now() + expiresIn * 1000)
-            });
-        }
+        res.cookie("refreshToken", refreshToken, {
+            httpOnly: true,
+            secure: !(process.env.MODO === "developer"),
+            sameSite: 'none',
+            expires: new Date(Date.now() + expiresIn * 1000)
+        });
+
     } catch (error) {
         console.log(error)
     }
