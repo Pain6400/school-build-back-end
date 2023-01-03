@@ -4,8 +4,9 @@ import { generateToken, generateRefreshToken } from "../utils/tokenManager.js";
 export const login = async (req, res) => {
     try {
         const { email, password } = req.body;
-        let user = await User.findOne({email});
-
+        let user = await User
+                        .findOne({email});
+        console.log(user)
         if(!user) return res.status(403).json({ status: false, message: "El usuario no existe"});
 
         const respuestaPassword = await user.comparePassrowd(password);
@@ -16,7 +17,23 @@ export const login = async (req, res) => {
 
         generateRefreshToken(user.uid, res);
 
-        return res.json({ strtus:true, message: "Usuario logeado correctamente", tokenInfo: token});
+        return res.json(
+            { 
+                status:true, 
+                message: "Usuario logeado correctamente", 
+                tokenInfo: token, 
+                userInfo: { 
+                    _id: user. _id, 
+                    school_id: user.school_id,
+                    type_id: user.type_id,
+                    account_number: user.account_number,
+                    user_name: user.user_name,
+                    name: user.name,
+                    phone_number: user.phone_number,
+                    email: user.email
+                }
+            }
+        );
 
     } catch (error) { 
         console.log(error)
