@@ -1,5 +1,6 @@
 import { Student } from "../models/Student.js";
 import { Student_Class } from "../models/Student_Class.js";
+import { Home_Work } from "../models/Home_Work.js";
 
 export const getStudentsBySchool = async(req, res) => {
     try {
@@ -60,6 +61,20 @@ export const addStudentToClass = async(req, res) => {
 
         await studentToClass.save();
         return res.json({ status: true, message: "Estudiante agregado a una clase correctamente", studentToClass });
+        
+    } catch (error) {
+        return res.status(500).json({status: false, message: error.message});
+    }
+}
+
+export const createHomeWork = async(req, res) => {
+    try {
+        const { student_id, title, description, grade, date_create, date_from, date_to } = req.body;
+
+        const homeWork = new Home_Work({ student_id, title, description, grade, date_create, date_from, date_to })
+
+        await homeWork.save();
+        return res.json({ status: true, message: "Tarea creada correctamente", homeWork });
         
     } catch (error) {
         return res.status(500).json({status: false, message: error.message});

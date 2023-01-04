@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { Student } from "./Student";
+import { Student } from "./Student.js";
 const { Schema, model } = mongoose;
 
 const HomeWorkSchema = new Schema({
@@ -8,11 +8,7 @@ const HomeWorkSchema = new Schema({
         required: true,
         ref: "Student"
     },
-    date_create: {
-        type: Date,
-        require: true
-    },
-    content: {
+    title: {
         type: String,
         require: true,
         trim: true,
@@ -24,10 +20,14 @@ const HomeWorkSchema = new Schema({
         trim: true,
         max: 250
     },
-    Grade: {
+    grade: {
         type: mongoose.Types.Decimal128,
         require: true,
         trim: true
+    },
+    date_create: {
+        type: Date,
+        require: true
     },
     date_from: {
         type: Date,

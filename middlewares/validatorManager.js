@@ -359,4 +359,53 @@ export const bodyClassRoomValidator = [
             .withMessage("Debe ingresar un formato de fecha"),
         validationResultExpress
     ];
+
+    export const bodyHomeWorkValidator = [
+        body("student_id", "Formato Incorrecto")
+            .trim()
+            .notEmpty(),
+        body("title", "Formato Incorrecto")
+            .trim()
+            .notEmpty(),
+        body("description", "Formato Incorrecto")
+            .trim()
+            .notEmpty(),
+        body("Grade", "Formato Incorrecto")
+            .trim()
+            .isDecimal(),   
+        body("date_create", "Formato Incorrecto")
+            .trim()
+            .notEmpty()
+            .isDate()
+            .withMessage("Debe ingresar un formato de fecha"),
+        body("date_from", "Formato Incorrecto")
+            .trim()
+            .notEmpty()
+            .isDate()
+            .withMessage("Debe ingresar un formato de fecha"),     
+        body("date_to", "Formato Incorrecto")
+            .trim()
+            .notEmpty()
+            .isDate()
+            .withMessage("Debe ingresar un formato de fecha"),         
+        validationResultExpress
+    ];
+
+    export const bodyDocumentHomeWorkValidator = [
+        body("home_work_id", "Formato Incorrecto")
+            .trim()
+            .notEmpty(),
+        body("name", "Formato Incorrecto")
+            .trim()
+            .notEmpty(),
+        body("url", "Formato Incorrecto")
+            .trim()
+            .notEmpty(),  
+        body("date_create", "Formato Incorrecto")
+            .trim()
+            .notEmpty()
+            .isDate()
+            .withMessage("Debe ingresar un formato de fecha"),     
+        validationResultExpress
+    ];
 //#endregion
