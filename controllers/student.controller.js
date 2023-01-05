@@ -1,6 +1,8 @@
 import { Student } from "../models/Student.js";
 import { Student_Class } from "../models/Student_Class.js";
 import { Home_Work } from "../models/Home_Work.js";
+import { bucket } from "../utils/storangeManager.js"
+
 
 export const getStudentsBySchool = async(req, res) => {
     try {
@@ -76,6 +78,27 @@ export const createHomeWork = async(req, res) => {
         await homeWork.save();
         return res.json({ status: true, message: "Tarea creada correctamente", homeWork });
         
+    } catch (error) {
+        return res.status(500).json({status: false, message: error.message});
+    }
+}
+
+export const uploadDocumentHomework =(req, res) => {
+    try {
+        if(req.file) {
+            const blob = bucket.file(req.file.originalname);
+            const blobStream = blob.createWriteStream({ resumable: false, gzip: true});
+
+            blobStream.on("finish", () => {
+               console.log("Ok")
+            });
+
+            blobStream.end(req.file.buffer);
+
+            return res.json({ status: true, message: "Archivo guardado correctamente" });
+        } else {
+            return res.status(500).json({status: false, message: "Error subiendo el archivo"});
+        }        
     } catch (error) {
         return res.status(500).json({status: false, message: error.message});
     }

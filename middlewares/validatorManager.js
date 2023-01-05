@@ -395,17 +395,6 @@ export const bodyClassRoomValidator = [
         body("home_work_id", "Formato Incorrecto")
             .trim()
             .notEmpty(),
-        body("name", "Formato Incorrecto")
-            .trim()
-            .notEmpty(),
-        body("url", "Formato Incorrecto")
-            .trim()
-            .notEmpty(),  
-        body("date_create", "Formato Incorrecto")
-            .trim()
-            .notEmpty()
-            .isDate()
-            .withMessage("Debe ingresar un formato de fecha"),     
         validationResultExpress
     ];
 //#endregion

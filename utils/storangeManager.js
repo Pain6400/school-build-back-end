@@ -1,9 +1,9 @@
 import { Storage } from "@google-cloud/storage";
-import { Multer } from "multer";
+import Multer from "multer";
 
 
 let proyectId = process.env.PROYECT_ID;
-let keyFileName = "";
+let keyFileName = "MyKeyGoogleStorage.json";
 const storage = new Storage({
     proyectId,
     keyFileName
@@ -17,4 +17,4 @@ export const multer = Multer({
     }
 });
 
-export const buget  = storage.bucket("");
+export const bucket  = storage.bucket("fileschool");
