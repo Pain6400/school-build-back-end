@@ -87,7 +87,7 @@ export const uploadDocumentHomework =(req, res) => {
     try {
         if(req.file) {
             const blob = bucket.file(req.file.originalname);
-            const blobStream = blob.createWriteStream({ resumable: false, gzip: true});
+            const blobStream = blob.createWriteStream();
 
             blobStream.on("finish", () => {
                console.log("Ok")

@@ -3,7 +3,7 @@ import Multer from "multer";
 
 
 let proyectId = process.env.PROYECT_ID;
-let keyFileName = "MyKeyGoogleStorage.json";
+let keyFileName = "escuelas-373715-769cffe73c71.json";
 const storage = new Storage({
     proyectId,
     keyFileName
