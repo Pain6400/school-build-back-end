@@ -1,17 +1,9 @@
 import { Student } from "../models/Student.js";
 import { Student_Class } from "../models/Student_Class.js";
 import { Home_Work } from "../models/Home_Work.js";
-import { Storage } from "@google-cloud/storage";
-import { processFileMiddleware } from "../utils/storangeManager.js";
-import { fileURLToPath } from 'url';
-import { dirname } from 'path';
-import path from "path";
+import { bucket } from "../utils/storangeManager.js";
 import { format } from "util";
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-const storage = new Storage({ keyFilename: path.join(__dirname, "google-cloud-key.json" ) });
-const bucket = storage.bucket("fileschool");
 
 export const getStudentsBySchool = async(req, res) => {
     try {
@@ -94,13 +86,11 @@ export const createHomeWork = async(req, res) => {
 
 export const uploadDocumentHomework = async(req, res) => {
     try {
-        await processFileMiddleware(req, res);
-
         if (!req.file) {
             return res.status(400).send({ message: "Please upload a file!" });
           }
-          
-          const blob = bucket.file(req.file.originalname);
+
+          const blob = bucket.file(`test/${req.file.originalname}`);
           const blobStream = blob.createWriteStream({
             resumable: false,
           });
@@ -109,21 +99,12 @@ export const uploadDocumentHomework = async(req, res) => {
             return res.status(500).send({ message: err.message });
           });
 
-          blobStream.on("finish", async (data) => {
+          blobStream.on("finish", async () => {
             const publicUrl = format(
               `https://storage.googleapis.com/${bucket.name}/${blob.name}`
             );
       
-            try {
-                console.log(publicUrl);
-              await bucket.file(req.file.originalname).makePublic();
-            } catch {
-              return res.status(500).send({
-                message:
-                  `Uploaded the file successfully: ${req.file.originalname}, but public access is denied!`,
-                url: publicUrl,
-              });
-            }
+            console.log(publicUrl);
       
             res.status(200).send({
               message: "Uploaded the file successfully: " + req.file.originalname,
@@ -132,7 +113,7 @@ export const uploadDocumentHomework = async(req, res) => {
           });
 
           blobStream.end(req.file.buffer);
-
+          console.log("test")
     } catch (error) {
         if (error.code == "LIMIT_FILE_SIZE") {
             return res.status(500).send({
