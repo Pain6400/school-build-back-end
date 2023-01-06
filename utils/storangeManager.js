@@ -1,20 +1,11 @@
-import { Storage } from "@google-cloud/storage";
 import Multer from "multer";
+import util  from "util";
+const maxSize = 50 * 1024 * 1024
 
 
-let proyectId = process.env.PROYECT_ID;
-let keyFileName = "escuelas-373715-769cffe73c71.json";
-const storage = new Storage({
-    proyectId,
-    keyFileName
-});
-
-
-export const multer = Multer({
+let processFile = Multer({
     storage: Multer.memoryStorage(),
-    limits: {
-        fileSize: 50 * 1024 * 1024
-    }
-});
+    limits: { fileSize: maxSize },
+  }).single("file");
 
-export const bucket  = storage.bucket("fileschool");
+export const processFileMiddleware = util.promisify(processFile);

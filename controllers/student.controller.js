@@ -1,8 +1,17 @@
 import { Student } from "../models/Student.js";
 import { Student_Class } from "../models/Student_Class.js";
 import { Home_Work } from "../models/Home_Work.js";
-import { bucket } from "../utils/storangeManager.js"
+import { Storage } from "@google-cloud/storage";
+import { processFileMiddleware } from "../utils/storangeManager.js";
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+import path from "path";
+import { format } from "util";
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+const storage = new Storage({ keyFilename: path.join(__dirname, "google-cloud-key.json" ) });
+const bucket = storage.bucket("fileschool");
 
 export const getStudentsBySchool = async(req, res) => {
     try {
@@ -83,23 +92,56 @@ export const createHomeWork = async(req, res) => {
     }
 }
 
-export const uploadDocumentHomework =(req, res) => {
+export const uploadDocumentHomework = async(req, res) => {
     try {
-        if(req.file) {
-            const blob = bucket.file(req.file.originalname);
-            const blobStream = blob.createWriteStream();
+        await processFileMiddleware(req, res);
 
-            blobStream.on("finish", () => {
-               console.log("Ok")
+        if (!req.file) {
+            return res.status(400).send({ message: "Please upload a file!" });
+          }
+          
+          const blob = bucket.file(req.file.originalname);
+          const blobStream = blob.createWriteStream({
+            resumable: false,
+          });
+
+          blobStream.on("error", (err) => {
+            return res.status(500).send({ message: err.message });
+          });
+
+          blobStream.on("finish", async (data) => {
+            const publicUrl = format(
+              `https://storage.googleapis.com/${bucket.name}/${blob.name}`
+            );
+      
+            try {
+                console.log(publicUrl);
+              await bucket.file(req.file.originalname).makePublic();
+            } catch {
+              return res.status(500).send({
+                message:
+                  `Uploaded the file successfully: ${req.file.originalname}, but public access is denied!`,
+                url: publicUrl,
+              });
+            }
+      
+            res.status(200).send({
+              message: "Uploaded the file successfully: " + req.file.originalname,
+              url: publicUrl,
             });
+          });
 
-            blobStream.end(req.file.buffer);
+          blobStream.end(req.file.buffer);
 
-            return res.json({ status: true, message: "Archivo guardado correctamente" });
-        } else {
-            return res.status(500).json({status: false, message: "Error subiendo el archivo"});
-        }        
     } catch (error) {
-        return res.status(500).json({status: false, message: error.message});
+        if (error.code == "LIMIT_FILE_SIZE") {
+            return res.status(500).send({
+              message: "File size cannot be larger than 50MB!",
+            });
+          }
+      
+        return res.status(500).send({
+            message: error.message,
+        });
     }
 }
