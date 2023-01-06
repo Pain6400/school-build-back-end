@@ -1,6 +1,7 @@
 import axios from "axios";
-import { validationResult, body, param } from "express-validator";
-
+import { validationResult, body, param, check } from "express-validator";
+import bodyParser from "body-parser";
+const urlencodedParser = bodyParser.urlencoded({ extended: false });
 export const validationResultExpress = (req, res, next) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -392,9 +393,11 @@ export const bodyClassRoomValidator = [
     ];
 
     export const bodyDocumentHomeWorkValidator = [
-        body("home_work_id", "Formato Incorrecto")
-            .trim()
-            .notEmpty(),
+        urlencodedParser,
+        check("home_work_id", "Formato Incorrecto")
+            .exists(),
+        check("test", "Formato Incorrecto")
+            .exists(),
         validationResultExpress
     ];
 //#endregion

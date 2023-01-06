@@ -85,8 +85,9 @@ export const createHomeWork = async(req, res) => {
 }
 
 export const uploadDocumentHomework = async(req, res) => {
+  console.log(req.body.home_work_id)
     try {
-        if (!req.file) {
+        if (req.file) {
             return res.status(400).send({ message: "Please upload a file!" });
           }
 
@@ -113,7 +114,7 @@ export const uploadDocumentHomework = async(req, res) => {
           });
 
           blobStream.end(req.file.buffer);
-          console.log("test")
+
     } catch (error) {
         if (error.code == "LIMIT_FILE_SIZE") {
             return res.status(500).send({
