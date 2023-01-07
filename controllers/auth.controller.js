@@ -6,7 +6,6 @@ export const login = async (req, res) => {
         const { email, password } = req.body;
         let user = await User
                         .findOne({email});
-        console.log(user)
         if(!user) return res.status(403).json({ status: false, message: "El usuario no existe"});
 
         const respuestaPassword = await user.comparePassrowd(password);

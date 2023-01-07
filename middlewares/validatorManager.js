@@ -393,8 +393,6 @@ export const bodyClassRoomValidator = [
     export const bodyDocumentHomeWorkValidator = [
         body("home_work_id", "Formato Incorrecto")
             .notEmpty(),
-        body("test", "Formato Incorrecto")
-            .notEmpty(),
         validationResultExpress
     ];
 //#endregion
