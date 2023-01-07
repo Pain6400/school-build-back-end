@@ -87,7 +87,7 @@ export const uploadDocumentHomework = async(req, res) => {
         const path = await uploadDocumentToStorange("Escuela/Aula1", req);
 
         if(path.status) {
-            return res.json({ status: true, message: "Tarea creada correctamente" });
+            return res.json({ status: true, message: "Tarea creada correctamente", path: path.path });
         }
         
         return path;
