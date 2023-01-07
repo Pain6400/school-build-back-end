@@ -1,10 +1,7 @@
 import { Student } from "../models/Student.js";
 import { Student_Class } from "../models/Student_Class.js";
 import { Home_Work } from "../models/Home_Work.js";
-import { bucket } from "../utils/storangeManager.js";
-import { format } from "util";
-
-
+import { uploadDocumentToStorange } from "../utils/uploadFileManager.js";
 export const getStudentsBySchool = async(req, res) => {
     try {
         const { school_id } = req.params;
@@ -85,45 +82,12 @@ export const createHomeWork = async(req, res) => {
 }
 
 export const uploadDocumentHomework = async(req, res) => {
-  console.log(req.body.home_work_id)
     try {
-        if (req.file) {
-            return res.status(400).send({ message: "Please upload a file!" });
-          }
-
-          const blob = bucket.file(`test/${req.file.originalname}`);
-          const blobStream = blob.createWriteStream({
-            resumable: false,
-          });
-
-          blobStream.on("error", (err) => {
-            return res.status(500).send({ message: err.message });
-          });
-
-          blobStream.on("finish", async () => {
-            const publicUrl = format(
-              `https://storage.googleapis.com/${bucket.name}/${blob.name}`
-            );
-      
-            console.log(publicUrl);
-      
-            res.status(200).send({
-              message: "Uploaded the file successfully: " + req.file.originalname,
-              url: publicUrl,
-            });
-          });
-
-          blobStream.end(req.file.buffer);
-
+        const file = await uploadDocumentToStorange("Escuela/Aula1", req);
+        console.log(file)
+        return res.json({ status: true, message: "Tarea creada correctamente" });
+        
     } catch (error) {
-        if (error.code == "LIMIT_FILE_SIZE") {
-            return res.status(500).send({
-              message: "File size cannot be larger than 50MB!",
-            });
-          }
-      
-        return res.status(500).send({
-            message: error.message,
-        });
+        return res.status(500).json({status: false, message: error.message});
     }
 }
