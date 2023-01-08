@@ -83,8 +83,9 @@ export const createHomeWork = async(req, res) => {
 
 export const uploadDocumentHomework = async(req, res) => {
     try {
-
-        const path = await uploadDocumentToStorange("Escuela/Aula1", req);
+        const { home_work_id } = req.body;
+        ObtenerRutaTarea(home_work_id)
+        //const path = await uploadDocumentToStorange("Escuela/Aula1", req);
 
         if(path.status) {
             return res.json({ status: true, message: "Tarea creada correctamente", path: path.path });
@@ -97,10 +98,13 @@ export const uploadDocumentHomework = async(req, res) => {
 }
 
 async function ObtenerRutaTarea(idTarea) {
-    const path = await Home_Work
+    const { student_id:  { _id, user_id } } = await Home_Work
                     .findById(idTarea)
                     .populate({
                         path: "student_id",
-                        model: "Student"
-                    })
+                        model: "Student",
+                        select: { user_id: 1 }
+                    }).select({ user_id: 1, name: 1});
+
+    console.log(_id, user_id)
 }
