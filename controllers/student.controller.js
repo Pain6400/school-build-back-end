@@ -1,6 +1,7 @@
 import { Student } from "../models/Student.js";
 import { Student_Class } from "../models/Student_Class.js";
 import { Home_Work } from "../models/Home_Work.js";
+import { User } from "../models/User.js";
 import { uploadDocumentToStorange } from "../utils/uploadFileManager.js";
 export const getStudentsBySchool = async(req, res) => {
     try {
@@ -84,27 +85,36 @@ export const createHomeWork = async(req, res) => {
 export const uploadDocumentHomework = async(req, res) => {
     try {
         const { home_work_id } = req.body;
-        ObtenerRutaTarea(home_work_id)
-        //const path = await uploadDocumentToStorange("Escuela/Aula1", req);
+        const path = await ObtenerRutaTarea(home_work_id)
+        const file = await uploadDocumentToStorange(path, req);
 
-        if(path.status) {
-            return res.json({ status: true, message: "Tarea creada correctamente", path: path.path });
+        if(file.status) {
+            return res.json({ status: true, message: "Tarea creada correctamente", path: file.path });
         }
         
-        return path;
+        return file;
     } catch (error) {
         return res.status(500).json({status: false, message: error.message});
     }
 }
 
 async function ObtenerRutaTarea(idTarea) {
-    const { student_id:  { _id, user_id } } = await Home_Work
+    const { student_id:  { user_id, name } } = await Home_Work
                     .findById(idTarea)
                     .populate({
                         path: "student_id",
                         model: "Student",
-                        select: { user_id: 1 }
+                        select: { user_id: 1, name: 1 }
                     }).select({ user_id: 1, name: 1});
 
-    console.log(_id, user_id)
+    const {school_id}  = await User
+                        .findById(user_id)
+                        .populate({
+                            path: "school_id",
+                            model: "School",
+                            select: { school_id: 1, name: 1 }
+                        })
+                        .exec();
+    
+    return `${school_id.name}/${name}/${idTarea}`;
 }

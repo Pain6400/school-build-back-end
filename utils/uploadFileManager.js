@@ -1,4 +1,5 @@
 import { bucket } from "../utils/storangeManager.js";
+import { v4 as uuidv4 } from 'uuid';
 
 export const uploadDocumentToStorange = async(path, req) => {
       try {
@@ -10,7 +11,7 @@ export const uploadDocumentToStorange = async(path, req) => {
             return({ status: false, message: "Debe de subir un archivo!" });
             }
 
-            const blob = bucket.file(`${path}/${req.file.originalname}`);
+            const blob = bucket.file(`${path}/${uuidv4()}_${req.file.originalname}`);
             const blobStream = blob.createWriteStream({
               resumable: false,
             });
