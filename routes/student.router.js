@@ -11,6 +11,6 @@ router.get("/getStudentsBySchool/:school_id", requireToken,checkRoleAuth([ROLES_
 router.get("/getStudentsByClass/:class_id", requireToken,checkRoleAuth([ROLES_SETTING.SUPERADMIN, ROLES_SETTING.ADMIN]), getStudentsByClass);
 router.post("/createStudent", requireToken,checkRoleAuth([ROLES_SETTING.SUPERADMIN, ROLES_SETTING.ADMIN]), bodyStudentValidator, createStudent)
 router.post("/addStudentToClass", requireToken,checkRoleAuth([ROLES_SETTING.SUPERADMIN, ROLES_SETTING.ADMIN]), bodyStudentToClassValidator, addStudentToClass)
-router.post("/createHomeWork", requireToken,checkRoleAuth([ROLES_SETTING.TEACHER, ROLES_SETTING.SUPERADMIN]), bodyHomeWorkValidator, createHomeWork)
-router.post("/uploadDocumentHomework", requireToken,checkRoleAuth([ROLES_SETTING.TEACHER, ROLES_SETTING.SUPERADMIN]), processFileMiddleware.single("file"), bodyDocumentHomeWorkValidator, uploadDocumentHomework)
+router.post("/createHomeWork", requireToken,checkRoleAuth([ROLES_SETTING.SUPERADMIN,ROLES_SETTING.TEACHER]), bodyHomeWorkValidator, createHomeWork)
+router.post("/uploadDocumentHomework", requireToken,checkRoleAuth([ROLES_SETTING.SUPERADMIN,ROLES_SETTING.TEACHER]), processFileMiddleware.single("file"), bodyDocumentHomeWorkValidator, uploadDocumentHomework)
 export default router;
