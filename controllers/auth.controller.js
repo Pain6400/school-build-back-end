@@ -14,7 +14,7 @@ export const login = async (req, res) => {
 
         const token = generateToken(user.id)
 
-        generateRefreshToken(user.uid, res);
+        generateRefreshToken(user.id, res);
 
         return res.json(
             { 

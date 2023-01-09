@@ -22,7 +22,7 @@ export const generateRefreshToken = (uid, res) => {
             sameSite: 'none',
             expires: new Date(Date.now() + expiresIn * 1000)
         });
-
+        
     } catch (error) {
         console.log(error)
     }
