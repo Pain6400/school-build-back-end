@@ -58,6 +58,11 @@ export const addStudentToClass = async(req, res) => {
     try {
         const { student_id, class_id, dateFrom, dateTo } = req.body;
 
+        const student_Class = await Student_Class.findOne({student_id:student_id, class_id: class_id }).exec();
+
+        if(student_Class) {
+            return res.status(400).json({ status: false, message: "El Estudiante ya esta en una clase" });
+        }
         const studentToClass = new Student_Class({ student_id, class_id, dateFrom, dateTo })
 
         await studentToClass.save();
